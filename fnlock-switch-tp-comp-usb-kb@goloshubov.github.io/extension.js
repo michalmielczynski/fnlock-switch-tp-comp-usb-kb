@@ -21,7 +21,7 @@ function init(metadata) {
 
 
 function toggleFNLK() {
-  let [ok, out, err, exit] = GLib.spawn_command_line_sync("sh -c '{ grep -q 1 /sys/bus/hid/devices/*17EF\:604*/fn_lock && echo 0 || echo 1; } | tee /sys/bus/hid/devices/*17EF\:604*/fn_lock'");
+  let [ok, out, err, exit] = GLib.spawn_command_line_sync("sh -c '{ grep -q 1 /sys/devices/platform/lg-laptop/fn_lock && echo 0 || echo 1; } | tee /sys/devices/platform/lg-laptop/fn_lock'");
 
   if (ByteArray.toString(out).includes('0')) {
     icon.set_gicon(gicon_unlocked)
@@ -37,7 +37,7 @@ function enable() {
   gicon_locked = Gio.icon_new_for_string(Me.path + "/icons/" + FNLOCKED_ICON);
   gicon_unlocked = Gio.icon_new_for_string(Me.path + "/icons/" + FNUNLOCKED_ICON);
 
-  let [ok, out, err, exit] = GLib.spawn_command_line_sync("sh -c 'cat /sys/bus/hid/devices/*17EF\:604*/fn_lock'");
+  let [ok, out, err, exit] = GLib.spawn_command_line_sync("sh -c 'cat /sys/devices/platform/lg-laptop/fn_lock'");
 
   if (ByteArray.toString(out).includes('0')) {
     icon.set_gicon(gicon_unlocked)

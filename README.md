@@ -1,7 +1,7 @@
 # fnlock-switch-tp-comp-usb-kb
-Gnome Shell Extension - FnLock switch (ThinkPad Compact USB Keyboard) - https://extensions.gnome.org/extension/3939/fnlock-switch-thinkpad-compact-usb-keyboard/
+Gnome Shell Extension - FnLock switch (LG Gram) - 
 
-Why. There is an issue with Lenovo ThinkPad Compact USB Keyboard - FnLk doesn't work by pressing Fn+Esc in Linux. Manual toggling by writing 1|0 into `/sys/bus/hid/devices/*17EF\:604*/fn_loc` is possible though, thanks to: https://github.com/lentinj/tp-compact-keyboard.
+Why. There is an issue with LG Gram - FnLk doesn't work by pressing Fn+Esc in Linux. Manual toggling by writing 1|0 into `/sys/devices/platform/lg-laptop/fn_lock` is possible though
 
 
 \
@@ -11,18 +11,11 @@ Fn is unlocked\
 Fn is locked (FnLk)\
 ![screenshot01](https://github.com/goloshubov/tp-comp-keyboard-fnlk-switch/blob/master/about/screenshots/ss01.png)
 
-Notice that (Gnome) user should have write access to `/sys/bus/hid/devices/*17EF\:604*/fn_loc`
+Notice that (Gnome) user should have write access to `/sys/devices/platform/lg-laptop/fn_lock`
+
+You might add write access for your user doing:
 
 ```
-cat <<'EOF' >  /etc/udev/rules.d/99-thinkpad-compact-keyboard.rules 
-SUBSYSTEM=="hid", ATTRS{idVendor}=="17ef", ATTRS{idProduct}=="604*", \
-    RUN += "/bin/sh -c 'chown change_to_your_username \"/sys/$devpath/fn_lock\"'"
-EOF
-```
-or
-```
-cat <<'EOF' >  /etc/udev/rules.d/99-thinkpad-compact-keyboard.rules 
-SUBSYSTEM=="hid", ATTRS{idVendor}=="17ef", ATTRS{idProduct}=="604*", \
-    RUN += "/bin/sh -c 'chmod 0666 \"/sys/$devpath/fn_lock\"'"
-EOF
+sudo sudo chown your_user_name /sys/devices/platform/lg-laptop/fn_lock
+
 ```
